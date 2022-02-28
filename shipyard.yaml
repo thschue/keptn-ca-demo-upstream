@@ -4,6 +4,17 @@ metadata:
     name: ""
 spec:
     stages:
+        - name: dev
+          sequences:
+            - name: artifact-delivery
+              tasks:
+                - name: promotion
+                - name: monaco
+                - name: deployment
+                  properties:
+                    deploymentstrategy: user_managed
+                - name: smoke-test
+                - name: release
         - name: hardening
           sequences:
             - name: artifact-delivery
@@ -33,15 +44,4 @@ spec:
                   properties:
                     pass: manual
                     warning: manual
-                - name: release
-        - name: dev
-          sequences:
-            - name: artifact-delivery
-              tasks:
-                - name: promotion
-                - name: monaco
-                - name: deployment
-                  properties:
-                    deploymentstrategy: user_managed
-                - name: smoke-test
                 - name: release
