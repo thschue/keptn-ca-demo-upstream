@@ -4,6 +4,18 @@ metadata:
     name: ""
 spec:
     stages:
+        - name: hardening
+          sequences:
+            - name: artifact-delivery
+              triggeredOn:
+                - event: dev.artifact-delivery.finished
+              tasks:
+                - name: promotion
+                - name: deployment
+                  properties:
+                    deploymentstrategy: user_managed
+                - name: smoke-test
+                - name: release
         - name: production
           sequences:
             - name: artifact-delivery
@@ -23,18 +35,6 @@ spec:
         - name: dev
           sequences:
             - name: artifact-delivery
-              tasks:
-                - name: promotion
-                - name: deployment
-                  properties:
-                    deploymentstrategy: user_managed
-                - name: smoke-test
-                - name: release
-        - name: hardening
-          sequences:
-            - name: artifact-delivery
-              triggeredOn:
-                - event: dev.artifact-delivery.finished
               tasks:
                 - name: promotion
                 - name: deployment
