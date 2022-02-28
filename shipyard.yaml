@@ -4,11 +4,29 @@ metadata:
     name: ""
 spec:
     stages:
+        - name: production
+          sequences:
+            - name: artifact-delivery
+              triggeredOn:
+                - event: hardening.artifact-delivery.finished
+              tasks:
+                - name: promotion
+                - name: monaco
+                - name: deployment
+                  properties:
+                    deploymentstrategy: user_managed
+                - name: smoke-test
+                - name: approval
+                  properties:
+                    pass: manual
+                    warning: manual
+                - name: release
         - name: dev
           sequences:
             - name: artifact-delivery
               tasks:
                 - name: promotion
+                - name: monaco
                 - name: deployment
                   properties:
                     deploymentstrategy: user_managed
@@ -21,24 +39,9 @@ spec:
                 - event: dev.artifact-delivery.finished
               tasks:
                 - name: promotion
+                - name: monaco
                 - name: deployment
                   properties:
                     deploymentstrategy: user_managed
                 - name: smoke-test
-                - name: release
-        - name: production
-          sequences:
-            - name: artifact-delivery
-              triggeredOn:
-                - event: hardening.artifact-delivery.finished
-              tasks:
-                - name: promotion
-                - name: deployment
-                  properties:
-                    deploymentstrategy: user_managed
-                - name: smoke-test
-                - name: approval
-                  properties:
-                    pass: manual
-                    warning: manual
                 - name: release
