@@ -13,7 +13,10 @@ spec:
                 - name: deployment
                   properties:
                     deploymentstrategy: user_managed
+                - name: test
                 - name: evaluation
+                  properties:
+                    timeframe: 2m
         - name: hardening
           sequences:
             - name: artifact-delivery
