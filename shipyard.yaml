@@ -28,7 +28,10 @@ spec:
                 - name: deployment
                   properties:
                     deploymentstrategy: user_managed
+                - name: test
                 - name: evaluation
+                  properties:
+                    timeframe: 2m
         - name: production
           sequences:
             - name: artifact-delivery
@@ -40,4 +43,7 @@ spec:
                 - name: deployment
                   properties:
                     deploymentstrategy: user_managed
+                - name: test
                 - name: evaluation
+                  properties:
+                    timeframe: 2m
