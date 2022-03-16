@@ -1,0 +1,7 @@
+config:
+  - tenantrtbyversion: "calcversionmetric.json"
+
+tenantrtbyversion:
+  - name: "Calculated.ResponseTime.ByVersion"
+  - metricKey: "calc:service.responsetime.byversion"
+  - service: "{{ .Env.KEPTN_SERVICE }}"

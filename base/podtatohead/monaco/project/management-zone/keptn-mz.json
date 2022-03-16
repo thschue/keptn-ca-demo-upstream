@@ -1,0 +1,47 @@
+{
+    "name": "{{ .name }}",
+    "rules": [
+      {
+        "type": "SERVICE",
+        "enabled": true,
+        "propagationTypes": [
+          "SERVICE_TO_HOST_LIKE",
+          "SERVICE_TO_PROCESS_GROUP_LIKE"
+        ],
+        "conditions": [
+          {
+            "key": {
+              "attribute": "SERVICE_TAGS"
+            },
+            "comparisonInfo": {
+              "type": "TAG",
+              "operator": "EQUALS",
+              "value": {
+                "context": "ENVIRONMENT",
+                "key": "DT_APPLICATION_NAME",
+                "value": "{{ .project }}"
+              },
+              "negate": false
+            }
+          },
+          {
+            "key": {
+              "attribute": "SERVICE_TAGS"
+            },
+            "comparisonInfo": {
+              "type": "TAG",
+              "operator": "EQUALS",
+              "value": {
+                "context": "ENVIRONMENT",
+                "key": "DT_APPLICATION_ENVIRONMENT",
+                "value": "{{ .stage }}"
+              },
+              "negate": false
+            }
+          }
+        ]
+      }
+    ],
+    "dimensionalRules": []
+  }
+
