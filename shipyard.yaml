@@ -4,6 +4,19 @@ metadata:
     name: ""
 spec:
     stages:
+        - name: dev
+          sequences:
+            - name: artifact-delivery
+              tasks:
+                - name: promotion
+                - name: monaco
+                - name: deployment
+                  properties:
+                    deploymentstrategy: user_managed
+                - name: test
+                - name: evaluation
+                  properties:
+                    timeframe: 2m
         - name: hardening
           sequences:
             - name: artifact-delivery
@@ -24,19 +37,6 @@ spec:
             - name: artifact-delivery
               triggeredOn:
                 - event: hardening.artifact-delivery.finished
-              tasks:
-                - name: promotion
-                - name: monaco
-                - name: deployment
-                  properties:
-                    deploymentstrategy: user_managed
-                - name: test
-                - name: evaluation
-                  properties:
-                    timeframe: 2m
-        - name: dev
-          sequences:
-            - name: artifact-delivery
               tasks:
                 - name: promotion
                 - name: monaco
