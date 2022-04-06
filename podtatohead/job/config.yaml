@@ -1,0 +1,50 @@
+apiVersion: v2
+actions:
+  - name: "Deploy using helm"
+    events:
+      - name: "sh.keptn.event.deployment.triggered"
+    tasks:
+      - name: "Run helm"
+        files:
+          - /helm
+        env:
+          - name: VERSION
+            value: "$.data.labels.version"
+            valueFrom: event
+        image: "alpine/helm:3.8.0"
+        cmd: ["helm"]
+        args: ["upgrade", "--create-namespace", "--set", "keptn.version=$(VERSION)", "--set", "keptn.stage=$(KEPTN_STAGE)", "--set", "keptn.project=$(KEPTN_PROJECT)", "--set", "keptn.service=$(KEPTN_SERVICE)", "--install", "--atomic", "-n", "$(KEPTN_SERVICE)-$(KEPTN_STAGE)", "$(KEPTN_SERVICE)", "/keptn/helm/$(KEPTN_SERVICE)/.", "--wait"]
+
+
+
+  - name: "k6-smoke"
+    events:
+      - name: "sh.keptn.event.test.triggered"
+    tasks:
+      - name: "k6"
+        files:
+          - /k6
+        image: "loadimpact/k6"
+        cmd: ["k6"]
+        args: ["run", "-e", "SERVICE=$(KEPTN_SERVICE)", "-e", "STAGE=$(KEPTN_STAGE)", "--duration", "150s", "--vus", "60", "/keptn/k6/smoke.js"]
+  - name: "monaco"
+    events:
+      - name: "sh.keptn.event.monaco.triggered"
+    tasks:
+      - name: "monaco"
+        files:
+          - /monaco
+        workingDir: "/keptn/monaco"
+        image: "thschue/monaco-runner:1.7.0"
+        cmd: ["monaco"]
+        args: ["-e", "environments.yaml", "-se", "$(KEPTN_STAGE)"]
+        env:
+          - name: dynatrace 
+            valueFrom: secret
+  - name: "release"
+    events:
+      - name: "sh.keptn.event.release.triggered"
+    tasks:
+      - name: "argo-promote"
+        image: "quay.io/argoproj/kubectl-argo-rollouts:master"
+        args: ["promote","$(KEPTN_SERVICE)","-n","$(KEPTN_SERVICE)-$(KEPTN_STAGE)"]

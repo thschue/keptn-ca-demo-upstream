@@ -1,0 +1,14 @@
+dev:
+    - name: "dev"
+    - env-url: "https://vzz04825.sprint.dynatracelabs.com"
+    - env-token-name: "DT_API_TOKEN"
+
+hardening:
+    - name: "hardening"
+    - env-url: "https://vzz04825.sprint.dynatracelabs.com"
+    - env-token-name: "DT_API_TOKEN"
+
+production:
+    - name: "production"
+    - env-url: "https://vzz04825.sprint.dynatracelabs.com"
+    - env-token-name: "DT_API_TOKEN"
