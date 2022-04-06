@@ -1,0 +1,71 @@
+affinity: {}
+autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+entry:
+    env: []
+    repositoryBasename: podtato-entry
+    servicePort: 9000
+    serviceType: LoadBalancer
+    tag: 0.2.7-1
+fullnameOverride: ""
+hat:
+    env: []
+    repositoryBasename: podtato-hat
+    servicePort: 9001
+    serviceType: ClusterIP
+    tag: 0.2.7-1
+images:
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+    repositoryDirname: docker.io/thschue
+ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+        - host: chart-example.local
+          paths: []
+    tls: []
+keptn:
+    project: ""
+    service: ""
+    stage: pre-dev
+    version: '0.0.2'
+leftArm:
+    env: []
+    repositoryBasename: podtato-left-arm
+    servicePort: 9003
+    serviceType: ClusterIP
+    tag: 0.2.7-1
+leftLeg:
+    env: []
+    repositoryBasename: podtato-left-leg
+    servicePort: 9002
+    serviceType: ClusterIP
+    tag: 0.2.7-1
+nameOverride: ""
+nodeSelector: {}
+podAnnotations: {}
+podSecurityContext: {}
+replicaCount: 1
+resources: {}
+rightArm:
+    env: []
+    repositoryBasename: podtato-right-arm
+    servicePort: 9005
+    serviceType: ClusterIP
+    tag: 0.2.7-1
+rightLeg:
+    env: []
+    repositoryBasename: podtato-right-leg
+    servicePort: 9004
+    serviceType: ClusterIP
+    tag: 0.2.7-1
+securityContext: {}
+serviceAccount:
+    annotations: {}
+    create: true
+    name: ""
+tolerations: []
