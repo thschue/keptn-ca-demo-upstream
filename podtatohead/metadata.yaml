@@ -1,2 +1,5 @@
-servicename: podtatohead
-creationtimestamp: 2022-04-06 08:32:18.219287242 +0000 UTC m=+1300180.838383982
+apiVersion: keptn.sh/v1
+kind: KeptnArtifactMetadata
+spec:
+  version: "0.0.2"
+  project: "podtato-head"
